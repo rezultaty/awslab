@@ -54,6 +54,14 @@ function addPicture(name) {
         clickedPictures.push(new Picture(name));
 
     viewModel.choosenPictures.valueHasMutated();
+}
 
-    console.log(clickedPictures);
+function deletePhoto() {
+
+    $.ajax({
+        type: "POST",
+        url: "delete_photo",
+        data: clickedPictures
+    });
+
 }
