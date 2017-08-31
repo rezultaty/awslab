@@ -3,9 +3,9 @@ var clickedPictures = [];
 
 class Picture {
 
-    constructor(name) {
+    constructor(name, url) {
         this.name = name;
-        this.url = "https://s3.eu-west-2.amazonaws.com/psoirphotobucket/" + name;
+        this.url = url;
     }
 
 }
@@ -18,20 +18,18 @@ var viewModel = {
 ko.applyBindings(viewModel);
 
 $.ajax({
-    url: "http://psoirphotobucket.s3.eu-west-2.amazonaws.com/"
+    type: "POST",
+    url: "get_photos",
 }).done(function (data) {
-
-    var json = JSON.parse(xml2json(data, ""));
-
-    $.each(json.ListBucketResult.Contents, function (index, value) {
-        downloadedPictures.push(new Picture(value.Key));
+    var tempDownloadedPictures = JSON.parse(data);
+    tempDownloadedPictures.forEach(function (value) {
+        downloadedPictures.push(new Picture(value['name'], value['url']))
     });
-
     viewModel.pictures.valueHasMutated();
-
 });
 
 $(document).ready(function () {
+
     $('body').on('click', 'img', function () {
         if ($(this).css('background-color') == "rgb(255, 255, 255)")
             $(this).css('background-color', 'aqua');
@@ -77,7 +75,7 @@ function rotatePhoto() {
     $.ajax({
         type: "POST",
         url: "rotate_photo",
-        data: clickedPictures
+        data: photosToJSON()
     });
 
 }
@@ -87,7 +85,7 @@ function scalePhoto() {
     $.ajax({
         type: "POST",
         url: "scale_photo",
-        data: clickedPictures
+        data: photosToJSON()
     });
 
 }
