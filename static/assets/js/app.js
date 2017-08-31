@@ -75,3 +75,13 @@ function rotatePhoto() {
     });
 
 }
+
+function scalePhoto() {
+
+    $.ajax({
+        type: "POST",
+        url: "scale_photo",
+        data: clickedPictures
+    });
+
+}
