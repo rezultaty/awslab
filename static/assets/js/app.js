@@ -1,13 +1,6 @@
 var downloadedPictures = [];
 var clickedPictures = [];
 
-var viewModel = {
-    pictures: ko.observable(downloadedPictures),
-    choosenPictures: ko.observable(clickedPictures),
-}
-
-ko.applyBindings(viewModel);
-
 class Picture {
 
     constructor(name) {
@@ -16,6 +9,13 @@ class Picture {
     }
 
 }
+
+var viewModel = {
+    pictures: ko.observable(downloadedPictures),
+    choosenPictures: ko.observable(clickedPictures),
+};
+
+ko.applyBindings(viewModel);
 
 $.ajax({
     url: "http://psoirphotobucket.s3.eu-west-2.amazonaws.com/"
@@ -44,16 +44,22 @@ function addPicture(name) {
     var removed = false;
 
     clickedPictures.forEach(function (element, index) {
-        if (element.name == name) {
+        if (element === name) {
             clickedPictures.splice(index, 1);
             removed = true;
         }
     }, this);
 
     if (!removed)
-        clickedPictures.push(new Picture(name));
+        clickedPictures.push(name);
 
     viewModel.choosenPictures.valueHasMutated();
+}
+
+function photosToJSON() {
+    var obj = new Object();
+    obj.photos = clickedPictures;
+    return obj;
 }
 
 function deletePhoto() {
@@ -61,7 +67,7 @@ function deletePhoto() {
     $.ajax({
         type: "POST",
         url: "delete_photo",
-        data: clickedPictures
+        data: photosToJSON()
     });
 
 }

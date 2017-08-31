@@ -1,5 +1,9 @@
 var task = function (request, callback) {
 
+    var AWS = require('aws-sdk');
+    AWS.config.loadFromPath('./config.json');
+    var sqs = new AWS.SQS({ apiVersion: '2017-08-30' });
+
     var params = {
         DelaySeconds: 10,
         MessageAttributes: {
@@ -8,7 +12,7 @@ var task = function (request, callback) {
                 StringValue: "1"
             }
         },
-        MessageBody: JSON.stringify(request.body),
+        MessageBody: JSON.stringify(request.body['photos']),
         QueueUrl: "https://sqs.eu-west-2.amazonaws.com/953234601553/RutkowskiQueue"
     };
 
