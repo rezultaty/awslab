@@ -5,7 +5,7 @@ var task = function (request, callback) {
         MessageAttributes: {
             "MessageType": {
                 DataType: "Number",
-                StringValue: "1"
+                StringValue: "2"
             }
         },
         MessageBody: JSON.stringify(request.body),

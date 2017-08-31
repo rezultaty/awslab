@@ -65,3 +65,13 @@ function deletePhoto() {
     });
 
 }
+
+function rotatePhoto() {
+
+    $.ajax({
+        type: "POST",
+        url: "rotate_photo",
+        data: clickedPictures
+    });
+
+}
