@@ -30,15 +30,15 @@ $.ajax({
 
 $(document).ready(function () {
 
-    FileAPI.event.on(choose, 'change', function (evt) {
+    /*FileAPI.event.on(choose, 'change', function (evt) {
         var files = FileAPI.getFiles(evt); // Retrieve file list
 
-        FileAPI.filterFiles(files, function (file, info/**Object*/) {
+        FileAPI.filterFiles(files, function (file, info/!**Object*!/) {
             if (/^image/.test(file.type)) {
                 return info.width >= 320 && info.height >= 240;
             }
             return false;
-        }, function (files/**Array*/, rejected/**Array*/) {
+        }, function (files/!**Array*!/, rejected/!**Array*!/) {
             if (files.length) {
                 // Make preview 100x100
                 FileAPI.each(files, function (file) {
@@ -48,7 +48,7 @@ $(document).ready(function () {
                 });
 
                 // Uploading Files
-                /*FileAPI.upload({
+                /!*FileAPI.upload({
                     url: '/upload_photos',
                     files: {images: files},
 
@@ -56,10 +56,10 @@ $(document).ready(function () {
                     },
                     complete: function (err, xhr) {
                     }
-                });*/
+                });*!/
             }
         });
-    });
+    });*/
 
     $('body').on('click', 'img', function () {
         if ($(this).css('background-color') == "rgb(255, 255, 255)")
@@ -123,19 +123,26 @@ function scalePhoto() {
 
 function uploadPhotos() {
 
-    var files = FileAPI.getFiles(evt);
+    var input = document.getElementById('files');
+    var file = input.files[0];
 
-    FileAPI.filterFiles(files, function (file/**Object*/, info/**Object*/){
-        console.log("test");
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+        var arrayBuffer = reader.result;
+        console.log(arrayBuffer);
         $.ajax({
-            type: "POST",
-            url: "upload_photos",
-            data: file
+            url: 'upload_photos',
+            type: 'POST',
+            data: String(arrayBuffer),
+            dataType: "json"
         });
-    }, function (list/**Array*/, other/**Array*/){
-        if( list.length ){
-            // ..
-        }
-    });
+
+    };
+
+    reader.readAsDataURL(file);
+
+
+
 
 }
