@@ -30,6 +30,37 @@ $.ajax({
 
 $(document).ready(function () {
 
+    FileAPI.event.on(choose, 'change', function (evt) {
+        var files = FileAPI.getFiles(evt); // Retrieve file list
+
+        FileAPI.filterFiles(files, function (file, info/**Object*/) {
+            if (/^image/.test(file.type)) {
+                return info.width >= 320 && info.height >= 240;
+            }
+            return false;
+        }, function (files/**Array*/, rejected/**Array*/) {
+            if (files.length) {
+                // Make preview 100x100
+                FileAPI.each(files, function (file) {
+                    FileAPI.Image(file).preview(100).get(function (err, img) {
+                        images.appendChild(img);
+                    });
+                });
+
+                // Uploading Files
+                /*FileAPI.upload({
+                    url: '/upload_photos',
+                    files: {images: files},
+
+                    progress: function (evt) {
+                    },
+                    complete: function (err, xhr) {
+                    }
+                });*/
+            }
+        });
+    });
+
     $('body').on('click', 'img', function () {
         if ($(this).css('background-color') == "rgb(255, 255, 255)")
             $(this).css('background-color', 'aqua');
@@ -86,6 +117,25 @@ function scalePhoto() {
         type: "POST",
         url: "scale_photo",
         data: photosToJSON()
+    });
+
+}
+
+function uploadPhotos() {
+
+    var files = FileAPI.getFiles(evt);
+
+    FileAPI.filterFiles(files, function (file/**Object*/, info/**Object*/){
+        console.log("test");
+        $.ajax({
+            type: "POST",
+            url: "upload_photos",
+            data: file
+        });
+    }, function (list/**Array*/, other/**Array*/){
+        if( list.length ){
+            // ..
+        }
     });
 
 }

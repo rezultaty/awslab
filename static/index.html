@@ -14,7 +14,7 @@
 <body>
 <div class="container">
     <div class="row">
-        <button style="margin:1rem" type="button" class="btn btn-primary">Prześlij plik</button>
+        <button style="margin:1rem" type="button" class="btn btn-primary" onclick="uploadPhotos()">Prześlij plik</button>
         <button style="margin:1rem" type="button" class="btn btn-primary" onclick="deletePhoto()">Usuń</button>
         <button style="margin:1rem" type="button" class="btn btn-primary" onclick="rotatePhoto()">Obróć o 90 stopni
         </button>
@@ -44,12 +44,14 @@
             </div>
         </div>
         <div class="col-6 col-md-4">
-            <form style="height:60%; border-width:5px; border-style:dashed; border-color:aqua;" action="/file-upload"
-                  class="dropzone">
-                <div class="fallback">
-                    <input name="file" type="file" multiple/>
+            <div>
+                <!-- "js-fileapi-wrapper" -- required class -->
+                <div class="js-fileapi-wrapper upload-btn">
+                    <div class="upload-btn__txt">Choose files</div>
+                    <input id="choose" name="files" type="file" multiple/>
                 </div>
-            </form>
+                <div id="images"><!-- previews --></div>
+            </div>
         </div>
     </div>
 </div>
@@ -67,7 +69,9 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/xml2json.js"></script>
 <script src="js/knockout-3.4.2.js"></script>
+<script src="js/FileAPI.min.js"></script>
 <script src="js/app.js"></script>
+
 </body>
 
 </html>
