@@ -33,9 +33,7 @@ var task = function (request, callback) {
 
             });
         }
-
     });
-
 
 };
 

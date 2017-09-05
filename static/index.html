@@ -14,19 +14,13 @@
 <body>
 <div class="container">
     <div class="row">
-        <button style="margin:1rem" type="button" class="btn btn-primary" onclick="uploadPhotos()">Prześlij plik</button>
+        <button style="margin:1rem" type="button" class="btn btn-primary" onclick="uploadPhotos()">Prześlij plik
+        </button>
         <button style="margin:1rem" type="button" class="btn btn-primary" onclick="deletePhoto()">Usuń</button>
         <button style="margin:1rem" type="button" class="btn btn-primary" onclick="rotatePhoto()">Obróć o 90 stopni
         </button>
         <button style="margin:1rem" type="button" class="btn btn-primary" onclick="scalePhoto()">Przeskaluj zdjęcie
         </button>
-    </div>
-
-    <div class="row">
-        <label>Wybrane zdjęcia: </label>
-        <div data-bind="foreach: viewModel.choosenPictures">
-            <label data-bind="text: $data"/>
-        </div>
     </div>
 
     <div class="row">
@@ -44,13 +38,19 @@
             </div>
         </div>
         <div class="col-6 col-md-4">
-            <div>
-                <!-- "js-fileapi-wrapper" -- required class -->
-                <div class="js-fileapi-wrapper upload-btn">
-                    <div class="upload-btn__txt">Choose files</div>
-                    <input id="files" name="files" type="file"/>
+            <div class="row">
+                <div>
+                    <div class="js-fileapi-wrapper upload-btn">
+                        <div class="upload-btn__txt">Choose files</div>
+                        <input id="files" name="files" type="file"/>
+                    </div>
                 </div>
-                <div id="images"><!-- previews --></div>
+            </div>
+            <div class="row">
+                <label>Wybrane zdjęcia: </label>
+                <div data-bind="foreach: viewModel.choosenPictures">
+                    <p><label data-bind="text: $data"/></p>
+                </div>
             </div>
         </div>
     </div>

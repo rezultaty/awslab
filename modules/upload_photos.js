@@ -9,9 +9,13 @@ var task = function (request, callback) {
 
     var form = new formidable.IncomingForm();
     var fileName;
+
+    if (!fs.existsSync(Const.UPLOAD_DIR)){
+        fs.mkdirSync(Const.UPLOAD_DIR);
+    }
     
     form.multiples = true;
-    form.uploadDir = path.join(__dirname, '/uploads');
+    form.uploadDir = path.join(__dirname, Const.UPLOAD_DIR);
 
     form.on('file', function (field, file) {
         fileName = Const.getUniqueSQSName();
@@ -19,7 +23,7 @@ var task = function (request, callback) {
     });
 
     form.on('end', function () {
-        Jimp.read(path.join(__dirname, '/uploads/', fileName), function (err, image) {
+        Jimp.read(path.join(__dirname, Const.UPLOAD_DIR, fileName), function (err, image) {
             if (err)
                 throw err;
             image.getBuffer(image.getMIME(), (err, buffer) => {
@@ -28,7 +32,7 @@ var task = function (request, callback) {
                 s3Bucket.putObject(data, function (err, data) {
                     if (err) 
                         console.log('Error uploading data: ', data);
-                    fs.unlink(__dirname + '/uploads/' + fileName);
+                    fs.unlink(__dirname + Const.UPLOAD_DIR + "/" + fileName);
                 });
 
             });

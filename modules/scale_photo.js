@@ -1,28 +1,20 @@
 var task = function (request, callback) {
 
-    var AWS = require('aws-sdk');
-    AWS.config.loadFromPath('./config.json');
-    var sqs = new AWS.SQS({apiVersion: '2017-08-30'});
+    var Const = require("./const");
 
     var params = {
         DelaySeconds: 10,
         MessageAttributes: {
             "MessageType": {
                 DataType: "Number",
-                StringValue: "3"
+                StringValue: Const.SCALE_TYPE
             }
         },
         MessageBody: JSON.stringify(request.body),
-        QueueUrl: "https://sqs.eu-west-2.amazonaws.com/953234601553/RutkowskiQueue"
+        QueueUrl: Const.messageQueue
     };
 
-    sqs.sendMessage(params, function (err, data) {
-        if (err) {
-            console.log("Error", err);
-        } else {
-            console.log("Success", data.MessageId);
-        }
-    });
+    Const.sendMessage(params);
 
 };
 
