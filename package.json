@@ -7,7 +7,6 @@
   "dependencies": {
     "async": "^0.2.10",
     "aws-sdk": "^2.0.31",
-    "browserify": "^14.4.0",
     "express": "~3.4.8",
     "formidable": "^1.1.1",
     "fs": "0.0.1-security",
