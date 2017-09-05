@@ -102,10 +102,7 @@ function uploadPhotos() {
         type: 'POST',
         data: formData,
         processData: false,
-        contentType: false,
-        success: function (data) {
-            console.log('upload successful!');
-        }
+        contentType: false
     });
     
 

@@ -17,12 +17,12 @@ var task = function (request, callback) {
     var downloadedPictures = [];
     
     var s3 = new AWS.S3();
-    var params = { Bucket: Const.buketName };
+    var params = { Bucket: Const.bucketName };
     s3.listObjects(params, function (err, data) {
         var bucketContents = data.Contents;
 
         for (var i = 0; i < bucketContents.length; i++) {
-            var urlParams = { Bucket: Const.buketName, Key: bucketContents[i].Key};
+            var urlParams = { Bucket: Const.bucketName, Key: bucketContents[i].Key};
             s3.getSignedUrl('getObject', urlParams, function (err, url) {
                 downloadedPictures.push(new Picture(bucketContents[imageIterator].Key, url));
 

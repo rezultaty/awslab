@@ -1,6 +1,7 @@
 node_modules
 config.json
 idea
+.idea
 vs
 aws-sdk.js
 aws-sd.js

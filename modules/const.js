@@ -21,8 +21,33 @@
                 console.log("Success", data.MessageId);
             }
         });
+
+
     },
-    buketName: "psoirphotobucket",
+    prepareMessage: function(type, data) {
+
+        var Const = require("./const");
+
+        data.forEach(function(value) {
+            var params = {
+                DelaySeconds: 10,
+                MessageAttributes: {
+                    "MessageType": {
+                        DataType: "Number",
+                        StringValue: type
+                    }
+                },
+                MessageBody: JSON.stringify(value),
+                QueueUrl: Const.messageQueue
+            };
+
+            Const.sendMessage(params);
+        });
+
+
+
+    },
+    bucketName: "psoirphotobucket",
     messageQueue: "https://sqs.eu-west-2.amazonaws.com/953234601553/RutkowskiQueue",
 
     UPLOAD_DIR: '/uploads',

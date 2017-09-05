@@ -27,7 +27,7 @@ var task = function (request, callback) {
             if (err)
                 throw err;
             image.getBuffer(image.getMIME(), (err, buffer) => {
-                var s3Bucket = new AWS.S3({ params: { Bucket: Const.buketName } });
+                var s3Bucket = new AWS.S3({ params: { Bucket: Const.bucketName } });
                 var data = { Key: fileName, Body: buffer };
                 s3Bucket.putObject(data, function (err, data) {
                     if (err) 
