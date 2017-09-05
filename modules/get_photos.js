@@ -9,17 +9,20 @@ class Picture {
 
 var task = function (request, callback) {
 
-    var imageIterator = 0;
-    var downloadedPictures = [];
+    var Const = require("./const")
     var AWS = require('aws-sdk');
     AWS.config.loadFromPath('./config.json');
+
+    var imageIterator = 0;
+    var downloadedPictures = [];
+    
     var s3 = new AWS.S3();
-    var params = {Bucket: "psoirphotobucket"};
+    var params = { Bucket: Const.buketName };
     s3.listObjects(params, function (err, data) {
         var bucketContents = data.Contents;
 
         for (var i = 0; i < bucketContents.length; i++) {
-            var urlParams = {Bucket: "psoirphotobucket", Key: bucketContents[i].Key};
+            var urlParams = { Bucket: Const.buketName, Key: bucketContents[i].Key};
             s3.getSignedUrl('getObject', urlParams, function (err, url) {
                 downloadedPictures.push(new Picture(bucketContents[imageIterator].Key, url));
 

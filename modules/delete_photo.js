@@ -1,6 +1,7 @@
 var task = function (request, callback) {
 
     var AWS = require('aws-sdk');
+    var Const = require("./const");
     AWS.config.loadFromPath('./config.json');
     var sqs = new AWS.SQS({ apiVersion: '2017-08-30' });
 
@@ -9,11 +10,11 @@ var task = function (request, callback) {
         MessageAttributes: {
             "MessageType": {
                 DataType: "Number",
-                StringValue: "1"
+                StringValue: Const.DELETE_TYPE
             }
         },
         MessageBody: JSON.stringify(request.body['photos']),
-        QueueUrl: "https://sqs.eu-west-2.amazonaws.com/953234601553/RutkowskiQueue"
+        QueueUrl: Const.messageQueue
     };
 
     sqs.sendMessage(params, function (err, data) {
