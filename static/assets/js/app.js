@@ -29,38 +29,6 @@ $.ajax({
 });
 
 $(document).ready(function () {
-
-    /*FileAPI.event.on(choose, 'change', function (evt) {
-        var files = FileAPI.getFiles(evt); // Retrieve file list
-
-        FileAPI.filterFiles(files, function (file, info/!**Object*!/) {
-            if (/^image/.test(file.type)) {
-                return info.width >= 320 && info.height >= 240;
-            }
-            return false;
-        }, function (files/!**Array*!/, rejected/!**Array*!/) {
-            if (files.length) {
-                // Make preview 100x100
-                FileAPI.each(files, function (file) {
-                    FileAPI.Image(file).preview(100).get(function (err, img) {
-                        images.appendChild(img);
-                    });
-                });
-
-                // Uploading Files
-                /!*FileAPI.upload({
-                    url: '/upload_photos',
-                    files: {images: files},
-
-                    progress: function (evt) {
-                    },
-                    complete: function (err, xhr) {
-                    }
-                });*!/
-            }
-        });
-    });*/
-
     $('body').on('click', 'img', function () {
         if ($(this).css('background-color') == "rgb(255, 255, 255)")
             $(this).css('background-color', 'aqua');
@@ -125,24 +93,20 @@ function uploadPhotos() {
 
     var input = document.getElementById('files');
     var file = input.files[0];
+    var formData = new FormData();
 
-    var reader = new FileReader();
-
-    reader.onload = function(e) {
-        var arrayBuffer = reader.result;
-        console.log(arrayBuffer);
-        $.ajax({
-            url: 'upload_photos',
-            type: 'POST',
-            data: String(arrayBuffer),
-            dataType: "json"
-        });
-
-    };
-
-    reader.readAsDataURL(file);
-
-
-
+    formData.append('image', file);
+    
+    $.ajax({
+        url: 'upload_photos',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            console.log('upload successful!');
+        }
+    });
+    
 
 }
