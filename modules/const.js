@@ -9,7 +9,7 @@
         });
         return uuid;
     },
-    sendMessage: function(params) {
+    sendMessage: function (params) {
         var AWS = require('aws-sdk');
         AWS.config.loadFromPath('./config.json');
         var sqs = new AWS.SQS({apiVersion: this.API_VERSION});
@@ -24,11 +24,11 @@
 
 
     },
-    prepareMessage: function(type, data) {
+    prepareMessage: function (type, data) {
 
         var Const = require("./const");
 
-        data.forEach(function(value) {
+        data.forEach(function (value) {
             var params = {
                 DelaySeconds: 10,
                 MessageAttributes: {
@@ -43,8 +43,6 @@
 
             Const.sendMessage(params);
         });
-
-
 
     },
     putIntoLogDB: function (message) {
