@@ -10,13 +10,14 @@
         return uuid;
     },
     sendMessage: function (params) {
+        var Const  = require("./const");
         var AWS = require('aws-sdk');
         AWS.config.loadFromPath('./config.json');
-        var sqs = new AWS.SQS({apiVersion: this.API_VERSION});
+        var sqs = new AWS.SQS({apiVersion: Const.API_VERSION});
 
         sqs.sendMessage(params, function (err, data) {
             if (err) {
-                console.log("Error", err);
+                Const.putIntoLogDB(err);
             } else {
                 console.log("Success", data.MessageId);
             }
@@ -61,7 +62,7 @@
                 },
 
                 "Message": {
-                    S: "Worker; " + message
+                    S: "Client; " + message
                 }
             },
             ReturnConsumedCapacity: "TOTAL",

@@ -96,7 +96,7 @@ function uploadPhotos() {
     var formData = new FormData();
 
     formData.append('image', file);
-    
+
     $.ajax({
         url: 'upload_photos',
         type: 'POST',

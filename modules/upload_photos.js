@@ -23,15 +23,20 @@ var task = function (request, callback) {
     });
 
     form.on('end', function () {
+
+        var Const = require("./const");
+
         Jimp.read(path.join(__dirname, Const.UPLOAD_DIR, fileName), function (err, image) {
-            if (err)
+            if (err) {
+                Cont.putIntoLogDB(err);
                 throw err;
+            }
             image.getBuffer(image.getMIME(), (err, buffer) => {
                 var s3Bucket = new AWS.S3({ params: { Bucket: Const.bucketName } });
                 var data = { Key: fileName, Body: buffer };
                 s3Bucket.putObject(data, function (err, data) {
-                    if (err) 
-                        console.log('Error uploading data: ', data);
+                    if (err)
+                        Cont.putIntoLogDB(err);
                     fs.unlink(__dirname + Const.UPLOAD_DIR + "/" + fileName);
                 });
 
