@@ -1,11 +1,9 @@
-class Picture {
+var Picture = function(name, url) {
 
-    constructor(name, url) {
         this.name = name;
         this.url = url;
-    }
 
-}
+};
 
 var task = function (request, callback) {
 
