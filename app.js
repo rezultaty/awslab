@@ -5,7 +5,7 @@ var getPhotos = require("./modules/get_photos").lab;
 var uploadPhotos = require("./modules/upload_photos").lab;
 
 var urlMap = [
-    {path: "/", action: __dirname + "/static/index.html"},
+    {path: "/", action:__dirname + "/static/index.html"},
     {path: "/delete_photo", action: deletePhoto},
     {path: "/rotate_photo", action: rotatePhoto},
     {path: "/scale_photo", action: scalePhoto},
