@@ -19,7 +19,7 @@ ko.applyBindings(viewModel);
 
 $.ajax({
     type: "POST",
-    url: "get_photos",
+    url: "get_photos"
 }).done(function (data) {
     var tempDownloadedPictures = JSON.parse(data);
     tempDownloadedPictures.forEach(function (value) {
