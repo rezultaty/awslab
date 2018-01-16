@@ -47,7 +47,7 @@
 
     },
     putIntoLogDB: function (message) {
-
+        var Const = require("./const");
         var AWS = require('aws-sdk');
         AWS.config.loadFromPath('./config.json');
         var dynamodb = new AWS.DynamoDB();
@@ -66,14 +66,14 @@
                 }
             },
             ReturnConsumedCapacity: "TOTAL",
-            TableName: this.logTableName
+            TableName: Const.logTableName
         };
-        dynamodb.putItem(params, function (err, data) {
-        });
+        dynamodb.putItem(params, function (err, data) {});
 
     },
-    bucketName: "psoirphotobucket",
-    messageQueue: "https://sqs.eu-west-2.amazonaws.com/953234601553/RutkowskiQueue",
+    bucketName: "psoirbucket",
+    messageQueue: "https://sqs.eu-west-2.amazonaws.com/833105395622/psoirqueue",
+    logTableName: "psoirdynamodb",
 
     UPLOAD_DIR: '/uploads',
 

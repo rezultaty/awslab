@@ -14,6 +14,8 @@ var task = function (request, callback) {
     var imageIterator = 0;
     var downloadedPictures = [];
 
+    Const.putIntoLogDB("testSTART");
+
     var s3 = new AWS.S3();
     var params = {Bucket: Const.bucketName};
     s3.listObjects(params, function (err, data) {
